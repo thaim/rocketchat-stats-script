@@ -1,0 +1,54 @@
+influx-url = "http://localhost:8086"
+influx-skip-verify = true
+influx-auto-create-db = true
+#influx-pem-file = "/path/to/cert.pem"
+influx-clients = 10
+
+mongo-url = "localhost"
+# use the default MongoDB port on localhost
+mongo-skip-verify = true
+#mongo-pem-file = "/path/to/cert.pem"
+
+replay = false
+# process all events from the beginning of the oplog
+
+resume = false
+# save the timestamps of processed events for resuming later
+
+resume-name = "mongofluxd"
+# the key to store timestamps under in the collection mongoflux.resume
+
+verbose = false
+# output some information when points are written
+
+direct-reads = true
+# read events directly out of mongodb collections in addition to tailing the oplog
+
+exit-after-direct-reads = true
+# exit the process after direct reads have completed. defaults to false to continuously read events from the oplog
+
+[[measurement]]
+# this measurement will only apply to the collection test in db test
+# measurements are stored in an Influx DB matching the name of the MongoDB database
+namespace = "test.test"
+# fields must be document properties of type int, float, bool, or string
+# nested fields like "e.f" are supported, e.g. { e: { f: 1.5 }}
+fields = ["c", "d"]
+# optionally override the field to take time from.  defaults to the insertion ts at second precision
+# recommended if you need ms precision.  use Mongo's native Date object to get ms precision
+timefield = "t"
+# optionally override the time precision.  defaults to "s" since MongoDB oplog entries are to the second
+# use in conjunction with timefield and native Mongo Date to get ms precision
+precision = "ms"
+
+[[measurement]]
+namespace = "rocketchat.rocketchat_room"
+fields = ["_id", "t", "name", "msgs", "default", "_updatedAt", "lm"]
+timefield = "ts"
+precision = "ms"
+
+[[measurement]]
+namespace = "rocketchat.rocketchat_message"
+fields = ["_id", "msg", "rid", "bot", "attachments", "username", "u._id", "u.username", "_updatedAt"]
+timefield = "ts"
+precision = "ms"

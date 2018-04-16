@@ -1,0 +1,33 @@
+version: '3'
+services:
+  grafana:
+    image: grafana/grafana:5.0.4
+    volumes:
+      - grafana:/var/lib/grafana
+    environment:
+      - GF_SERVER_ROOT=${GF_HOSTNAME}
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_ROOT_PASSWORD}
+    ports:
+      - 5000:3000
+
+  influxdb:
+    image: influxdb
+    volumes:
+      - influxdb:/var/lib/influxdb
+    ports:
+      - "8084:8083"
+      - "8086:8086"
+
+  mongo:
+    image: mongo:3.2
+    command: --master
+    volumes:
+      - mongo:/data/db
+      - ./rocketchat:/rocketchat
+    ports:
+      - "27017:27017"
+
+volumes:
+  grafana:
+  influxdb:
+  mongo:
