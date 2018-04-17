@@ -35,6 +35,6 @@ precision = "ms"
 
 [[measurement]]
 namespace = "rocketchat.rocketchat_message"
-fields = ["_id", "msg", "rid", "bot", "attachments", "username", "u._id", "u.username", "_updatedAt"]
+fields = ["_id", "msg", "rid", "bot", "username", "u._id", "u.username", "_updatedAt"]
 timefield = "ts"
 precision = "ms"
