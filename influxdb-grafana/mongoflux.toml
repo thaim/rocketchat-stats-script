@@ -28,20 +28,6 @@ exit-after-direct-reads = true
 # exit the process after direct reads have completed. defaults to false to continuously read events from the oplog
 
 [[measurement]]
-# this measurement will only apply to the collection test in db test
-# measurements are stored in an Influx DB matching the name of the MongoDB database
-namespace = "test.test"
-# fields must be document properties of type int, float, bool, or string
-# nested fields like "e.f" are supported, e.g. { e: { f: 1.5 }}
-fields = ["c", "d"]
-# optionally override the field to take time from.  defaults to the insertion ts at second precision
-# recommended if you need ms precision.  use Mongo's native Date object to get ms precision
-timefield = "t"
-# optionally override the time precision.  defaults to "s" since MongoDB oplog entries are to the second
-# use in conjunction with timefield and native Mongo Date to get ms precision
-precision = "ms"
-
-[[measurement]]
 namespace = "rocketchat.rocketchat_room"
 fields = ["_id", "t", "name", "msgs", "default", "_updatedAt", "lm"]
 timefield = "ts"
